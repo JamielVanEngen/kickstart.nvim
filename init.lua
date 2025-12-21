@@ -708,6 +708,8 @@ require('lazy').setup({
         lemminx = {},
         xmlformatter = {},
         yamlfix = {},
+        markdown_oxide = {},
+        gofumpt = {},
       }
 
       -- Ensure the servers and tools above are installed
