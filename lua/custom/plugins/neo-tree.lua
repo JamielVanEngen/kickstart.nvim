@@ -8,18 +8,27 @@ return {
       'nvim-tree/nvim-web-devicons',
     },
     config = function()
-      vim.keymap.set('n', '<leader>st', '<cmd>Neotree reveal float<CR>', { desc = '[S]earch using Neo [T]ree' })
+      require('neo-tree').setup {
+        window = {
+          position = 'float',
+        },
+        filesystem = {
+          filtered_items = {
+            visible = true,
+            hide_dotfiles = false,
+            hide_gitignored = false,
+          },
+        },
+      }
+
+      vim.keymap.set('n', '<leader>st', '<cmd>Neotree reveal<CR>', { desc = '[S]earch using Neo [T]ree' })
 
       vim.api.nvim_create_autocmd('BufEnter', {
         callback = function()
-          -- Close Neotree if it's open and we're in a normal file buffer
           if vim.bo.buftype == '' then
             vim.cmd 'Neotree close'
           end
         end,
-        -- Add this to avoid issues with certain plugins or events
-        -- events = {'BufEnter', 'BufWinEnter'},
-        -- pattern = '*',
       })
     end,
   },

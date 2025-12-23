@@ -151,7 +151,7 @@ vim.o.splitbelow = true
 --   and `:help lua-options-guide`
 vim.o.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-vim.opt.conceallevel = 1
+vim.opt.conceallevel = 2
 
 -- Preview substitutions live, as you type!
 vim.o.inccommand = 'split'
@@ -710,6 +710,9 @@ require('lazy').setup({
         yamlfix = {},
         markdown_oxide = {},
         gofumpt = {},
+        terraform = {},
+        terraformls = {},
+        helm_ls = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -966,9 +969,9 @@ require('lazy').setup({
         -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
         --  If you are experiencing weird indenting issues, add the language to
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby' },
+        additional_vim_regex_highlighting = { 'ruby', 'lua' },
       },
-      indent = { enable = true, disable = { 'ruby' } },
+      indent = { enable = true, disable = { 'ruby', 'lua' } },
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
