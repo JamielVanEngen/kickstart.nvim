@@ -209,6 +209,31 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
+vim.keymap.set('n', '<leader>go', function()
+  -- Get origin URL
+  local url = vim.fn.system('git config --get remote.origin.url 2>/dev/null'):gsub('%s+$', '')
+
+  if url == '' then
+    vim.notify('No git origin found.', vim.log.levels.ERROR)
+    return
+  end
+
+  -- Convert SSH → HTTPS
+  if url:match '^git@' then
+    -- git@github.com:user/repo.git → https://github.com/user/repo
+    url = url:gsub('^git@([^:]+):(.+)$', 'https://%1/%2')
+    url = url:gsub('%.git$', '')
+    vim.notify(url)
+  else
+    -- https://github.com/user/repo.git → https://github.com/user/repo
+    url = url:gsub('%.git$', '')
+  end
+
+  vim.fn.jobstart({ 'xdg-open', url }, { detach = true })
+end, {
+  desc = '[G]it [O]pen repository',
+})
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -790,6 +815,11 @@ require('lazy').setup({
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      },
+      formatters = {
+        xmlformatter = {
+          prepend_args = { '--indent', '4', '--blanks', '--correct', 'True' },
+        },
       },
     },
   },
