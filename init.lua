@@ -707,7 +707,7 @@ require('lazy').setup({
         yamlls = {},
         lemminx = {},
         xmlformatter = {},
-        yamlfix = {},
+        yamlfmt = {},
         markdown_oxide = {},
         gofumpt = {},
         terraform = {},
